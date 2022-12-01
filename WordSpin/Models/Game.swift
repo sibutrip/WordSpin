@@ -25,7 +25,7 @@ enum Difficulty {
 class Game: ObservableObject {
     var winChecker: WinCheckable
     @Published var gameIsWon = false
-    var numberOfAttempts = 0
+    @Published var numberOfAttempts = 0
     var wordList: [String]
     @Published var currentWord = Word() {
         willSet { previousWord = currentWord }
@@ -41,9 +41,7 @@ class Game: ObservableObject {
     
     func checkIfMovedLetter() {
         if previousWord.Letters != currentWord.Letters {
-            numberOfAttempts += 1
             if winChecker.checkIfWonGame(forWord: currentWord) {
-                print("this wins, right?")
                 gameIsWon = true
             }
         }
@@ -90,12 +88,12 @@ class Game: ObservableObject {
     }
     
     func createNewGame() {
-        gameIsWon = false
         let nextWord = generateNewWord(from: wordList)
         if !winChecker.checkIfWonGame(forWord: nextWord) || currentWord.Letters.count > 9 {
             createNewGame()
             return
         }
+        gameIsWon = false
         currentWord = shuffleLetters(nextWord)
     }
 }

@@ -26,11 +26,15 @@ final class DraggingManager<Entry: Identifiable>: ObservableObject {
     var initialEntries: [Entry] = [] {
         didSet {
             entries = initialEntries
-            calculateGridDimensions()
+//            calculateGridDimensions()
         }
     }
     @Published // Currently displayed (while dragging)
-    var entries: [Entry]?
+    var entries: [Entry]? {
+        didSet {
+            calculateGridDimensions()
+        }
+    }
     
     var draggedEntry: Entry? { // Detected when dragging starts
         didSet { draggedEntryInitialIndex = initialEntries.firstIndex(where: { $0.id == draggedEntry?.id })
@@ -82,7 +86,8 @@ struct Draggable<Entry: Identifiable>: ViewModifier {
     var originalEntries: [Entry]
     let draggingManager: DraggingManager<Entry>
     let entry: Entry
-
+    @Binding var score: Int
+    
     @ViewBuilder
     func body(content: Content) -> some View {
         if let entryIndex = originalEntries.firstIndex(where: { $0.id == entry.id }) {
@@ -99,7 +104,8 @@ struct Draggable<Entry: Identifiable>: ViewModifier {
                 dragGesture(
                     draggingManager: draggingManager,
                     entry: entry,
-                    originalEntries: $originalEntries
+                    originalEntries: $originalEntries,
+                    score: $score
                 )
             )
         }
@@ -108,7 +114,7 @@ struct Draggable<Entry: Identifiable>: ViewModifier {
         }
     }
     
-    func dragGesture<Entry: Identifiable>(draggingManager: DraggingManager<Entry>, entry: Entry, originalEntries: Binding<[Entry]>) -> some Gesture {
+    func dragGesture<Entry: Identifiable>(draggingManager: DraggingManager<Entry>, entry: Entry, originalEntries: Binding<[Entry]>, score: Binding<Int>) -> some Gesture {
         DragGesture(coordinateSpace: .named(draggingManager.coordinateSpaceID))
             .onChanged { value in
                 // Detect start of dragging
@@ -135,13 +141,14 @@ struct Draggable<Entry: Identifiable>: ViewModifier {
                     draggingManager.draggedEntry = nil
                     draggingManager.draggedToIndex = nil
                 }
+                score.wrappedValue += 1
             }
     }
 }
 
 extension View {
     // Allows item in LazyVGrid to be dragged between other items.
-    func draggable<Entry: Identifiable>(draggingManager: DraggingManager<Entry>, entry: Entry, originalEntries: Binding<[Entry]>) -> some View {
-        self.modifier(Draggable(originalEntries: originalEntries, draggingManager: draggingManager, entry: entry))
+    func draggable<Entry: Identifiable>(draggingManager: DraggingManager<Entry>, entry: Entry, originalEntries: Binding<[Entry]>, score: Binding<Int>) -> some View {
+        self.modifier(Draggable(originalEntries: originalEntries, draggingManager: draggingManager, entry: entry, score: score))
     }
 }

@@ -28,7 +28,6 @@ struct EasyWinChecker: WinCheckable {
 
 struct MediumWinChecker: WinCheckable {
     func checkIfWonGame(forWord word: Word) -> Bool {
-        print("check please!")
         var areLettersShuffled = [Bool]()
         for position in 0..<word.Letters.count {
             if word.Letters[position].positions.contains(position) { // spicy gibberish: if the position it's in contains the correct position then it's NOT shuffled

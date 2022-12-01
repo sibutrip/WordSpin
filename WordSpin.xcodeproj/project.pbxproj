@@ -126,8 +126,8 @@
 				74D56775292E5D870001BEE3 /* Game.swift */,
 				74D56776292E5D870001BEE3 /* Word Model.swift */,
 				74D56777292E5D870001BEE3 /* Letter Model.swift */,
-				7407F45A2935549F00D7FDD3 /* DraggingManager.swift */,
 				74B2CB8229392817009AB6B7 /* WinCheckers.swift */,
+				7407F45A2935549F00D7FDD3 /* DraggingManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";

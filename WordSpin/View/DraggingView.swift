@@ -18,6 +18,11 @@ struct DraggingView: View {
     @StateObject private var CurrentGame = Game(difficulty: .medium)
     @StateObject private var devicesDraggingManager = DraggingManager<LetterModel>()
     
+    var addToScore: some Gesture {
+        DragGesture()
+            .onEnded { _ in CurrentGame.numberOfAttempts += 1 }
+    }
+    
     func determineOpacity(_ LetterModel: LetterModel) -> Double {
         guard let letterIndex = CurrentGame.currentWord.Letters.firstIndex(of: LetterModel) else { fatalError("could not locate current word index") }
         if LetterModel.positions.contains(Int(letterIndex)) {
@@ -40,16 +45,16 @@ struct DraggingView: View {
                             Text(LetterModel.letterString)
                                 .font(.largeTitle)
                         }
-                        .draggable(
-                            draggingManager: devicesDraggingManager,
-                            entry: LetterModel,
-                            originalEntries: $CurrentGame.currentWord.Letters
-                        )
+                        .if(!CurrentGame.gameIsWon) { view in
+                            view.draggable(
+                                draggingManager: devicesDraggingManager,
+                                entry: LetterModel,
+                                originalEntries: $CurrentGame.currentWord.Letters,
+                                score: $CurrentGame.numberOfAttempts
+                            )
+                        }
                 }
                 .frame(width: geo.size.width / CGFloat(CurrentGame.currentWord.Letters.count), height: geo.size.width / CGFloat(CurrentGame.currentWord.Letters.count))
-//                .onReceive(CurrentGame.$currentWord) { _ in
-//                    CurrentGame.checkIfMovedLetter()
-//                }
             }
             .coordinateSpace(name: devicesDraggingManager.coordinateSpaceID)
             .frame(maxHeight: .infinity)
@@ -68,5 +73,16 @@ struct DraggingView: View {
 struct DraggingView_Previews: PreviewProvider {
     static var previews: some View {
         DraggingView()
+    }
+}
+
+
+extension View {
+    @ViewBuilder func `if`<Content: View>(_ condition: Bool, transform: (Self) -> Content) -> some View {
+        if condition {
+            transform(self)
+        } else {
+            self
+        }
     }
 }
