@@ -9,7 +9,7 @@ import Foundation
 
 struct LetterModel: Identifiable, Equatable {
     let id = UUID()
-    let letter: String
+    let letterString: String
     var isRotated: Bool
     var positions: [Int]
 }

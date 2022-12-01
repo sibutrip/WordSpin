@@ -18,12 +18,12 @@ struct LetterView: View {
             })
             .overlay {
                 
-                Text(CurrentLetterModel.letter)
+                Text(CurrentLetterModel.letterString)
                     .rotation3DEffect(.degrees(CurrentLetterModel.isRotated ? 180 : 0),axis:(x:0,y:1,z:0))
                     .onTapGesture {
                         CurrentLetterModel.isRotated.toggle()
                         if CurrentGame.checkIfWonGame() {
-                            CurrentGame.winGame()
+                            CurrentGame.gameIsWon = true
                         }
                     }
                     .animation(.default, value: CurrentLetterModel.isRotated)

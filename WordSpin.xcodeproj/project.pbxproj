@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7407F45B2935549F00D7FDD3 /* DraggingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7407F45A2935549F00D7FDD3 /* DraggingManager.swift */; };
 		7407F45D293554F500D7FDD3 /* DraggingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7407F45C293554F500D7FDD3 /* DraggingView.swift */; };
+		74B2CB8329392817009AB6B7 /* WinCheckers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B2CB8229392817009AB6B7 /* WinCheckers.swift */; };
 		74C646A92927CF1300BEF360 /* WordSpinApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C646A82927CF1300BEF360 /* WordSpinApp.swift */; };
 		74C646AD2927CF1400BEF360 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74C646AC2927CF1400BEF360 /* Assets.xcassets */; };
 		74C646B02927CF1400BEF360 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74C646AF2927CF1400BEF360 /* Preview Assets.xcassets */; };
@@ -28,6 +29,7 @@
 /* Begin PBXFileReference section */
 		7407F45A2935549F00D7FDD3 /* DraggingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggingManager.swift; sourceTree = "<group>"; };
 		7407F45C293554F500D7FDD3 /* DraggingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggingView.swift; sourceTree = "<group>"; };
+		74B2CB8229392817009AB6B7 /* WinCheckers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinCheckers.swift; sourceTree = "<group>"; };
 		74C646A52927CF1300BEF360 /* WordSpin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WordSpin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		74C646A82927CF1300BEF360 /* WordSpinApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordSpinApp.swift; sourceTree = "<group>"; };
 		74C646AC2927CF1400BEF360 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 				74D56776292E5D870001BEE3 /* Word Model.swift */,
 				74D56777292E5D870001BEE3 /* Letter Model.swift */,
 				7407F45A2935549F00D7FDD3 /* DraggingManager.swift */,
+				74B2CB8229392817009AB6B7 /* WinCheckers.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -210,6 +213,7 @@
 				74D56778292E5D870001BEE3 /* Game.swift in Sources */,
 				74D567832934F7110001BEE3 /* LottieView.swift in Sources */,
 				74D56766292E55FF0001BEE3 /* WinView.swift in Sources */,
+				74B2CB8329392817009AB6B7 /* WinCheckers.swift in Sources */,
 				74D56768292E56430001BEE3 /* LetterView.swift in Sources */,
 				7407F45D293554F500D7FDD3 /* DraggingView.swift in Sources */,
 				74D56779292E5D870001BEE3 /* Word Model.swift in Sources */,
