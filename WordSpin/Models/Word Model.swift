@@ -11,7 +11,7 @@ import Foundation
 struct WordFileReader {
     func readsWordFile() -> [String] {
         do {
-            guard let path = Bundle.main.path(forResource: "dictionary", ofType: "rtf") else {
+            guard let path = Bundle.main.path(forResource: "nouns", ofType: "rtf") else {
                 fatalError("could not locate file")
             }
             let data = try String(contentsOfFile:path, encoding: String.Encoding.utf8)
@@ -21,5 +21,5 @@ struct WordFileReader {
 }
 
 struct Word {
-    var Letters: [LetterModel]
+    var Letters = [LetterModel]()
 }

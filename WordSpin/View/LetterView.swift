@@ -22,7 +22,7 @@ struct LetterView: View {
                     .rotation3DEffect(.degrees(CurrentLetterModel.isRotated ? 180 : 0),axis:(x:0,y:1,z:0))
                     .onTapGesture {
                         CurrentLetterModel.isRotated.toggle()
-                        if CurrentGame.checkIfWonGame() {
+                        if CurrentGame.winChecker.checkIfWonGame(forWord: CurrentGame.currentWord) {
                             CurrentGame.gameIsWon = true
                         }
                     }

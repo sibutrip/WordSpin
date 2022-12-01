@@ -10,6 +10,7 @@
 		7407F45B2935549F00D7FDD3 /* DraggingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7407F45A2935549F00D7FDD3 /* DraggingManager.swift */; };
 		7407F45D293554F500D7FDD3 /* DraggingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7407F45C293554F500D7FDD3 /* DraggingView.swift */; };
 		74B2CB8329392817009AB6B7 /* WinCheckers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B2CB8229392817009AB6B7 /* WinCheckers.swift */; };
+		74B2CB8529392BEA009AB6B7 /* nouns.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 74B2CB8429392BE9009AB6B7 /* nouns.rtf */; };
 		74C646A92927CF1300BEF360 /* WordSpinApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C646A82927CF1300BEF360 /* WordSpinApp.swift */; };
 		74C646AD2927CF1400BEF360 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74C646AC2927CF1400BEF360 /* Assets.xcassets */; };
 		74C646B02927CF1400BEF360 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74C646AF2927CF1400BEF360 /* Preview Assets.xcassets */; };
@@ -30,6 +31,7 @@
 		7407F45A2935549F00D7FDD3 /* DraggingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggingManager.swift; sourceTree = "<group>"; };
 		7407F45C293554F500D7FDD3 /* DraggingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggingView.swift; sourceTree = "<group>"; };
 		74B2CB8229392817009AB6B7 /* WinCheckers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinCheckers.swift; sourceTree = "<group>"; };
+		74B2CB8429392BE9009AB6B7 /* nouns.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; name = nouns.rtf; path = Utils/nouns.rtf; sourceTree = "<group>"; };
 		74C646A52927CF1300BEF360 /* WordSpin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WordSpin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		74C646A82927CF1300BEF360 /* WordSpinApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordSpinApp.swift; sourceTree = "<group>"; };
 		74C646AC2927CF1400BEF360 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 				74D56769292E565C0001BEE3 /* View */,
 				74D5676B292E56770001BEE3 /* Utils */,
 				74C646B82927CF3800BEF360 /* dictionary.rtf */,
+				74B2CB8429392BE9009AB6B7 /* nouns.rtf */,
 				74C646AC2927CF1400BEF360 /* Assets.xcassets */,
 				74C646AE2927CF1400BEF360 /* Preview Content */,
 			);
@@ -195,6 +198,7 @@
 			files = (
 				74C646BD2927CF3800BEF360 /* dictionary.rtf in Resources */,
 				74D5677C2934F4170001BEE3 /* Fireworks.json in Resources */,
+				74B2CB8529392BEA009AB6B7 /* nouns.rtf in Resources */,
 				74C646B02927CF1400BEF360 /* Preview Assets.xcassets in Resources */,
 				74C646AD2927CF1400BEF360 /* Assets.xcassets in Resources */,
 			);

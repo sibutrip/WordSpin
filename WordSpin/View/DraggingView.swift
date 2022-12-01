@@ -47,9 +47,9 @@ struct DraggingView: View {
                         )
                 }
                 .frame(width: geo.size.width / CGFloat(CurrentGame.currentWord.Letters.count), height: geo.size.width / CGFloat(CurrentGame.currentWord.Letters.count))
-                .onReceive(CurrentGame.$currentWord) { _ in
-                    CurrentGame.checkIfMovedLetter()
-                }
+//                .onReceive(CurrentGame.$currentWord) { _ in
+//                    CurrentGame.checkIfMovedLetter()
+//                }
             }
             .coordinateSpace(name: devicesDraggingManager.coordinateSpaceID)
             .frame(maxHeight: .infinity)

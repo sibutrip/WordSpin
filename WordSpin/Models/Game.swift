@@ -5,6 +5,7 @@
 //  Created by Cory Tripathy on 11/15/22.
 //
 
+
 import Foundation
 
 enum Difficulty {
@@ -14,9 +15,9 @@ enum Difficulty {
         case .easy:
             return EasyWinChecker()
         case .medium:
-            return MediumWinCheker()
+            return MediumWinChecker()
         case .hard:
-            return HardWinCheker()
+            return HardWinChecker()
         }
     }
 }
@@ -26,8 +27,11 @@ class Game: ObservableObject {
     @Published var gameIsWon = false
     var numberOfAttempts = 0
     var wordList: [String]
-    @Published var currentWord: Word = .init(Letters: [LetterModel]()) { willSet { previousWord = currentWord } }
-    var previousWord: Word = .init(Letters: [LetterModel]())
+    @Published var currentWord = Word() {
+        willSet { previousWord = currentWord }
+        didSet { checkIfMovedLetter() }
+    }
+    var previousWord = Word()
     
     init(difficulty: Difficulty) {
         winChecker = difficulty.selectDifficulty()
@@ -38,13 +42,14 @@ class Game: ObservableObject {
     func checkIfMovedLetter() {
         if previousWord.Letters != currentWord.Letters {
             numberOfAttempts += 1
-            if checkIfWonGame() {
+            if winChecker.checkIfWonGame(forWord: currentWord) {
+                print("this wins, right?")
                 gameIsWon = true
             }
         }
     }
     
-    func generateNewWord(from listOfWords: [String]) {
+    func generateNewWord(from listOfWords: [String]) -> Word {
         var nextWord = [LetterModel]()
         let randomWordString = listOfWords[Int.random(in: 0..<listOfWords.count)]
         var prevLettersList = [String()]
@@ -61,15 +66,15 @@ class Game: ObservableObject {
             prevLettersList.append(randomWordString[newPosition])
         }
         _ = nextWord.popLast()
-        currentWord = Word(Letters: nextWord)
         var word = String()
-        for i in currentWord.Letters {
+        for i in nextWord {
             word += i.letterString
         }
         print(word)
+        return Word(Letters: nextWord)
     }
     
-    func shuffleLetters(_ word: Word) {
+    func shuffleLetters(_ word: Word) -> Word {
         var letters = word.Letters
         var wordIsShuffled = false
         while !wordIsShuffled {
@@ -81,39 +86,17 @@ class Game: ObservableObject {
                 }
             }
         }
-        currentWord = Word(Letters: letters)
-    }
-    
-    func checkIfWonGame() -> Bool {
-        var countCorrectLetters = 0
-        for Letter in currentWord.Letters {
-            if ["i","l","o","v","w","x"].contains(Letter.letterString) || !Letter.isRotated {
-                countCorrectLetters += 1
-            }
-        }
-        var wordIsShuffled = false
-        for position in 0..<currentWord.Letters.count {
-            if currentWord.Letters[position].positions.contains(position) { // spicy gibberish
-                wordIsShuffled = false
-            } else {
-                wordIsShuffled = true
-            }
-        }
-        
-        if countCorrectLetters == (currentWord.Letters.count) && !wordIsShuffled {
-            return true
-        }
-        return false
+        return Word(Letters: letters)
     }
     
     func createNewGame() {
-        generateNewWord(from: wordList)
-        if checkIfWonGame() || currentWord.Letters.count > 9 {
+        gameIsWon = false
+        let nextWord = generateNewWord(from: wordList)
+        if !winChecker.checkIfWonGame(forWord: nextWord) || currentWord.Letters.count > 9 {
             createNewGame()
             return
         }
-        shuffleLetters(currentWord)
-        gameIsWon = false
+        currentWord = shuffleLetters(nextWord)
     }
 }
 
