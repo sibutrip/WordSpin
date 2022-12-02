@@ -26,15 +26,11 @@ final class DraggingManager<Entry: Identifiable>: ObservableObject {
     var initialEntries: [Entry] = [] {
         didSet {
             entries = initialEntries
-//            calculateGridDimensions()
-        }
-    }
-    @Published // Currently displayed (while dragging)
-    var entries: [Entry]? {
-        didSet {
             calculateGridDimensions()
         }
     }
+    @Published // Currently displayed (while dragging)
+    var entries: [Entry]?
     
     var draggedEntry: Entry? { // Detected when dragging starts
         didSet { draggedEntryInitialIndex = initialEntries.firstIndex(where: { $0.id == draggedEntry?.id })
@@ -59,14 +55,14 @@ final class DraggingManager<Entry: Identifiable>: ObservableObject {
         let y = max(0, min(Int((point.y - gridDimensions.origin.y) / gridDimensions.size.height), numberOfRows - 1))
         return max(0, min(y * numberOfColumns + x, initialEntries.count - 1))
     }
-
+    
     private func calculateGridDimensions() {
         let allFrames = framesOfEntries.values
         let rows = Dictionary(grouping: allFrames) { frame in
             frame.origin.y
         }
-        numberOfRows = rows.count
-        numberOfColumns = rows.values.map(\.count).max() ?? 0
+        numberOfRows = 1
+        numberOfColumns = entries?.count ?? 0
         let minX = allFrames.map(\.minX).min() ?? 0
         let maxX = allFrames.map(\.maxX).max() ?? 0
         let minY = allFrames.map(\.minY).min() ?? 0
@@ -77,7 +73,6 @@ final class DraggingManager<Entry: Identifiable>: ObservableObject {
         let size = CGSize(width: width, height: height)
         gridDimensions = CGRect(origin: origin, size: size)
     }
-        
 }
 
 struct Draggable<Entry: Identifiable>: ViewModifier {
@@ -105,6 +100,7 @@ struct Draggable<Entry: Identifiable>: ViewModifier {
                     draggingManager: draggingManager,
                     entry: entry,
                     originalEntries: $originalEntries,
+          
                     score: $score
                 )
             )
@@ -124,7 +120,7 @@ struct Draggable<Entry: Identifiable>: ViewModifier {
                         draggingManager.draggedEntry = entry
                     }
                 }
-                
+    
                 let point = draggingManager.indexForPoint(value.location)
                 if point != draggingManager.draggedToIndex {
                     draggingManager.draggedToIndex = point

@@ -89,7 +89,7 @@ class Game: ObservableObject {
     
     func createNewGame() {
         let nextWord = generateNewWord(from: wordList)
-        if !winChecker.checkIfWonGame(forWord: nextWord) || currentWord.Letters.count > 9 {
+        if nextWord.Letters.count > 9 {
             createNewGame()
             return
         }
