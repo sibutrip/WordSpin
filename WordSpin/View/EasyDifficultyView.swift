@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 struct EasyDifficultyView: View {
     @StateObject var CurrentGame = Game(difficulty: .easy)
     var body: some View {

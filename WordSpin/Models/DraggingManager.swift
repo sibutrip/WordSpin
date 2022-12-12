@@ -58,9 +58,6 @@ final class DraggingManager<Entry: Identifiable>: ObservableObject {
     
     private func calculateGridDimensions() {
         let allFrames = framesOfEntries.values
-        let rows = Dictionary(grouping: allFrames) { frame in
-            frame.origin.y
-        }
         numberOfRows = 1
         numberOfColumns = entries?.count ?? 0
         let minX = allFrames.map(\.minX).min() ?? 0
@@ -82,12 +79,13 @@ struct Draggable<Entry: Identifiable>: ViewModifier {
     let draggingManager: DraggingManager<Entry>
     let entry: Entry
     @Binding var score: Int
+    @Binding var gameIsWon: Bool
     
     @ViewBuilder
     func body(content: Content) -> some View {
         if let entryIndex = originalEntries.firstIndex(where: { $0.id == entry.id }) {
             let isBeingDragged = entryIndex == draggingManager.draggedEntryInitialIndex
-            let scale: CGFloat = isBeingDragged ? 1.1 : 1.0
+            let scale: CGFloat = (isBeingDragged && !gameIsWon) ? 1.1 : 1.0
             content.background(
                 GeometryReader { geometry -> Color in
                     draggingManager.setFrameOfEntry(at: entryIndex, frame: geometry.frame(in: .named(draggingManager.coordinateSpaceID)))
@@ -100,8 +98,8 @@ struct Draggable<Entry: Identifiable>: ViewModifier {
                     draggingManager: draggingManager,
                     entry: entry,
                     originalEntries: $originalEntries,
-          
-                    score: $score
+                    score: $score,
+                    winState: $gameIsWon
                 )
             )
         }
@@ -110,12 +108,12 @@ struct Draggable<Entry: Identifiable>: ViewModifier {
         }
     }
     
-    func dragGesture<Entry: Identifiable>(draggingManager: DraggingManager<Entry>, entry: Entry, originalEntries: Binding<[Entry]>, score: Binding<Int>) -> some Gesture {
+    func dragGesture<Entry: Identifiable>(draggingManager: DraggingManager<Entry>, entry: Entry, originalEntries: Binding<[Entry]>, score: Binding<Int>, winState: Binding<Bool>) -> some Gesture {
         DragGesture(coordinateSpace: .named(draggingManager.coordinateSpaceID))
             .onChanged { value in
                 // Detect start of dragging
                 if draggingManager.draggedEntry?.id != entry.id {
-                    withAnimation {
+                    withAnimation(winState.wrappedValue ? nil : .default) {
                         draggingManager.initialEntries = originalEntries.wrappedValue
                         draggingManager.draggedEntry = entry
                     }
@@ -125,13 +123,13 @@ struct Draggable<Entry: Identifiable>: ViewModifier {
                 if point != draggingManager.draggedToIndex {
                     draggingManager.draggedToIndex = point
                 }
-                withAnimation {
+                withAnimation(winState.wrappedValue ? nil : .default) {
                     originalEntries.wrappedValue = draggingManager.entries!
                 }
                 
             }
             .onEnded { value in
-                withAnimation {
+                withAnimation(winState.wrappedValue ? nil : .default) {
                     originalEntries.wrappedValue = draggingManager.entries!
                     draggingManager.entries = nil
                     draggingManager.draggedEntry = nil
@@ -144,7 +142,7 @@ struct Draggable<Entry: Identifiable>: ViewModifier {
 
 extension View {
     // Allows item in LazyVGrid to be dragged between other items.
-    func draggable<Entry: Identifiable>(draggingManager: DraggingManager<Entry>, entry: Entry, originalEntries: Binding<[Entry]>, score: Binding<Int>) -> some View {
-        self.modifier(Draggable(originalEntries: originalEntries, draggingManager: draggingManager, entry: entry, score: score))
+    func draggable<Entry: Identifiable>(draggingManager: DraggingManager<Entry>, entry: Entry, originalEntries: Binding<[Entry]>, score: Binding<Int>, winState: Binding<Bool>) -> some View {
+        self.modifier(Draggable(originalEntries: originalEntries, draggingManager: draggingManager, entry: entry, score: score, gameIsWon: winState))
     }
 }

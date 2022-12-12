@@ -34,25 +34,33 @@ struct DraggingView: View {
     var body: some View {
         GeometryReader { geo in
             HStack(spacing: 0) {
-                ForEach(CurrentGame.currentWord.Letters) { LetterModel in
+                ForEach(CurrentGame.gameIsWon ? CurrentGame.correctWord.Letters : CurrentGame.currentWord.Letters) { LetterModel in
                     RoundedRectangle(cornerRadius: 10)
                         .foregroundColor(.mint)
                         .overlay(content: {
                             RoundedRectangle(cornerRadius: 10).stroke()
                         })
-                        .opacity(determineOpacity(LetterModel))
+                        .opacity(CurrentGame.gameIsWon ? 1.0 : determineOpacity(LetterModel))
                         .overlay {
                             Text(LetterModel.letterString)
                                 .font(.largeTitle)
                         }
-                        .if(!CurrentGame.gameIsWon) { view in
-                            view.draggable(
-                                draggingManager: devicesDraggingManager,
-                                entry: LetterModel,
-                                originalEntries: $CurrentGame.currentWord.Letters,
-                                score: $CurrentGame.numberOfAttempts
-                            )
-                        }
+//                        .if(!CurrentGame.gameIsWon) { view in
+//                            view.draggable(
+//                                draggingManager: devicesDraggingManager,
+//                                entry: LetterModel,
+//                                originalEntries: $CurrentGame.currentWord.Letters,
+//                                score: $CurrentGame.numberOfAttempts,
+//                                winState: $CurrentGame.gameIsWon
+//                            )
+//                        }
+                        .draggable(
+                            draggingManager: devicesDraggingManager,
+                            entry: LetterModel,
+                            originalEntries: $CurrentGame.currentWord.Letters,
+                            score: $CurrentGame.numberOfAttempts,
+                            winState: $CurrentGame.gameIsWon
+                        )
                 }
                 .frame(width: geo.size.width / CGFloat(CurrentGame.currentWord.Letters.count), height: geo.size.width / CGFloat(CurrentGame.currentWord.Letters.count))
             }

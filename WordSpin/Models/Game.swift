@@ -31,6 +31,7 @@ class Game: ObservableObject {
         willSet { previousWord = currentWord }
         didSet { checkIfMovedLetter() }
     }
+    @Published var correctWord = Word()
     var previousWord = Word()
     
     init(difficulty: Difficulty) {
@@ -49,7 +50,8 @@ class Game: ObservableObject {
     
     func generateNewWord(from listOfWords: [String]) -> Word {
         var nextWord = [LetterModel]()
-        let randomWordString = listOfWords[Int.random(in: 0..<listOfWords.count)]
+//        let randomWordString = listOfWords[Int.random(in: 0..<listOfWords.count)]
+        let randomWordString = "HellNo"
         var prevLettersList = [String()]
         for newPosition in 0..<randomWordString.count {
             let currentLetter = randomWordString[newPosition]
@@ -94,7 +96,9 @@ class Game: ObservableObject {
             return
         }
         gameIsWon = false
+        correctWord = nextWord
         currentWord = shuffleLetters(nextWord)
+        numberOfAttempts = 0
     }
 }
 
