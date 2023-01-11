@@ -52,3 +52,4 @@ struct HardWinChecker: WinCheckable {
         return false
     }
 }
+

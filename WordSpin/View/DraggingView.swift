@@ -44,6 +44,7 @@ struct DraggingView: View {
                         .overlay {
                             Text(LetterModel.letterString)
                                 .font(.largeTitle)
+                            
                         }
 //                        .if(!CurrentGame.gameIsWon) { view in
 //                            view.draggable(
