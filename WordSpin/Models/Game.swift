@@ -50,8 +50,7 @@ class Game: ObservableObject {
     
     func generateNewWord(from listOfWords: [String]) -> Word {
         var nextWord = [LetterModel]()
-//        let randomWordString = listOfWords[Int.random(in: 0..<listOfWords.count)]
-        let randomWordString = "HellNo"
+        let randomWordString = listOfWords[Int.random(in: 0..<listOfWords.count)].uppercased()
         var prevLettersList = [String()]
         for newPosition in 0..<randomWordString.count {
             let currentLetter = randomWordString[newPosition]

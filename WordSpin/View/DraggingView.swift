@@ -74,6 +74,7 @@ struct DraggingView: View {
             }
             .overlay(alignment: .top) {
                 Text("number of attempts: \(CurrentGame.numberOfAttempts)")
+                    .font(.title)
             }
         }
     }
